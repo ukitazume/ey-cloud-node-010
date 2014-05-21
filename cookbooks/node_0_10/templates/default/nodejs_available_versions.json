@@ -1,0 +1,2 @@
+#edit this file with the appropriate version
+{"version":"<%= @version %>","available_versions":["<%= @version %>"]}
