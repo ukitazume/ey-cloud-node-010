@@ -1,26 +1,17 @@
 if app_server?
 
-  # create new nodejs_available_versions_json
-  template "/opt/nodejs/nodejs_available_versions.json" do
-    source 'nodejs_available_versions.json'
-    owner node[:owner_name]
-    group node[:owner_name]
-    backup false
-    mode 0644
-    variables({
-      :version  => node[:nodejs][:version]
-    })
+  enable_package "net-libs/nodejs" do
+    version "0.10.28"
   end
 
-  link "/opt/nodejs/current" do
-    to "/opt/nodejs/#{node[:nodejs][:version]}"
+  package "net-libs/nodejs" do
+    version "0.10.28"
+    action :install
   end
 
-  link "/usr/bin/node" do
-    to "/opt/nodejs/current/bin/node"
-  end
+  execute "select nodejs version" do
+    command "eselect nodejs set 0.10.28"
+    action :nothing
+  end 
 
-  link "/usr/bin/npm" do
-    to "/opt/nodejs/current/bin/npm"
-  end
 end
